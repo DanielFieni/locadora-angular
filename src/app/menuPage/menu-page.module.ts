@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MenuPageRoutingModule } from './menu-page-routing.module';
 import { MenuComponent } from './menu-component/menu-component.component';
-import { MatToolbarModule } from "@angular/material/toolbar";
+import { AppMaterialModule } from "../shared/app-material/app-material.module";
 
 @NgModule({
   declarations: [
@@ -12,7 +12,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
   imports: [
     CommonModule,
     MenuPageRoutingModule,
-    MatToolbarModule
+    AppMaterialModule,
   ]
 })
 export class MenuPageModule { }
