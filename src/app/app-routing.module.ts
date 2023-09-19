@@ -10,7 +10,15 @@ const routes: Routes = [
   {
     path: 'ator',
     loadChildren: () => import('./atorPage/ator-page.module').then(m => m.AtorPageModule)
-  }
+  },
+  {
+    path: 'classe',
+    loadChildren: () => import('./classePage/classe-page.module').then(m => m.ClassePageModule)
+  },
+  {
+    path: 'diretor',
+    loadChildren: () => import('./diretorPage/diretor-page.module').then(m => m.DiretorPageModule)
+  },
 ];
 
 @NgModule({

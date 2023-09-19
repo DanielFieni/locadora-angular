@@ -1,27 +1,26 @@
 import {Component, OnInit} from '@angular/core';
-import {Ator} from "../../../models/ator";
-import {AtorService} from "../../services/ator.service";
+import { DiretorService} from "../../services/diretor.service";
 import {catchError, config, Observable, of} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {ErrorDialogComponent} from "../../../shared/components/error-dialog/error-dialog.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {
   ConfirmationDialogComponent
 } from "../../../shared/components/confirmation-dialog/confirmation-dialog.component";
+import {Diretor} from "../../../models/diretor";
 
 @Component({
-  selector: 'app-classe-component',
-  templateUrl: './ator-component.component.html',
-  styleUrls: ['./ator-component.component.css']
+  selector: 'app-diretor-component',
+  templateUrl: './diretor-component.component.html',
+  styleUrls: ['./diretor-component.component.css']
 })
-export class AtorComponent implements OnInit {
+export class DiretorComponent implements OnInit {
 
-  atores$: Observable<Ator[]> | null = null;
+  diretores$: Observable<Diretor[]> | null = null;
 
   constructor(
-    private atorService: AtorService,
+    private diretorService: DiretorService,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
@@ -31,10 +30,10 @@ export class AtorComponent implements OnInit {
   }
 
   refresh(){
-    this.atores$ = this.atorService.list()
+    this.diretores$ = this.diretorService.list()
       .pipe(
         catchError(error => {
-          this.onError('Erro ao carregar atores!')
+          this.onError('Erro ao carregar diretores!')
           return of([])
         })
       )
@@ -54,27 +53,27 @@ export class AtorComponent implements OnInit {
     this.router.navigate(['novo'], {relativeTo: this.route});
   }
 
-  onEdit(ator: Ator){
-    this.router.navigate(['editar' , ator.id], { relativeTo: this.route });
+  onEdit(diretor: Diretor){
+    this.router.navigate(['editar' , diretor.id], { relativeTo: this.route });
   }
 
-  onRemove(ator: Ator){
+  onRemove(diretor: Diretor){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: 'Tem certeza que deseja remover esse Ator?'
+      data: 'Tem certeza que deseja remover esse Diretor?'
     })
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result){
-        this.atorService.remove(ator.id).subscribe(
+        this.diretorService.remove(diretor.id).subscribe(
           () => {
             this.refresh();
-            this.snackBar.open('Ator removido com sucesso.', 'X', {
+            this.snackBar.open('Diretor removido com sucesso.', 'X', {
               duration: 5000,
               verticalPosition: 'top',
               horizontalPosition: 'center'
             });
           },
-          () => this.onError('Erro ao tentar remover Ator.')
+          () => this.onError('Erro ao tentar remover Diretor.')
         )
       }
     })

@@ -1,0 +1,31 @@
+<mat-card>
+
+  <mat-toolbar>Detalhes da Classe</mat-toolbar>
+
+  <mat-card-content class="card-container">
+
+    <form [formGroup]="form">
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Valor" formControlName="valor">
+        <mat-error *ngIf="form.get('valor')?.invalid">{{
+          getErrorMessage('valor')
+          }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Data de Devolução" formControlName="dataDevolucao">
+        <mat-error *ngIf="form.get('dataDevolucao')?.invalid">{{
+          getErrorMessage('dataDevolucao')
+          }}</mat-error>
+      </mat-form-field>
+
+    </form>
+
+  </mat-card-content>
+
+  <mat-card-actions class="actions-center">
+    <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+    <button mat-raised-button (click)="onCancel()">Cancelar</button>
+  </mat-card-actions>
+</mat-card>

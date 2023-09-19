@@ -1,5 +1,5 @@
 export interface Classe {
-  _id: number,
-  valor: number,
+  id: string,
+  valor: string,
   dataDevolucao: string
 }

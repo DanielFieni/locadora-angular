@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Ator} from "../../../models/ator";
-import {AtorService} from "../../services/ator.service";
+import {Classe} from "../../../models/classe";
+import { ClasseService } from "../../services/classe.service";
 import {catchError, config, Observable, of} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {ErrorDialogComponent} from "../../../shared/components/error-dialog/error-dialog.component";
@@ -13,15 +13,15 @@ import {
 
 @Component({
   selector: 'app-classe-component',
-  templateUrl: './ator-component.component.html',
-  styleUrls: ['./ator-component.component.css']
+  templateUrl: './classe-component.component.html',
+  styleUrls: ['./classe-component.component.css']
 })
-export class AtorComponent implements OnInit {
+export class ClasseComponent implements OnInit {
 
-  atores$: Observable<Ator[]> | null = null;
+  classes$: Observable<Classe[]> | null = null;
 
   constructor(
-    private atorService: AtorService,
+    private classeService: ClasseService,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
@@ -31,10 +31,10 @@ export class AtorComponent implements OnInit {
   }
 
   refresh(){
-    this.atores$ = this.atorService.list()
+    this.classes$ = this.classeService.list()
       .pipe(
         catchError(error => {
-          this.onError('Erro ao carregar atores!')
+          this.onError('Erro ao carregar classes!')
           return of([])
         })
       )
@@ -54,27 +54,27 @@ export class AtorComponent implements OnInit {
     this.router.navigate(['novo'], {relativeTo: this.route});
   }
 
-  onEdit(ator: Ator){
-    this.router.navigate(['editar' , ator.id], { relativeTo: this.route });
+  onEdit(classe: Classe){
+    this.router.navigate(['editar' , classe.id], { relativeTo: this.route });
   }
 
-  onRemove(ator: Ator){
+  onRemove(classe: Classe){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: 'Tem certeza que deseja remover esse Ator?'
+      data: 'Tem certeza que deseja remover essa Classe?'
     })
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result){
-        this.atorService.remove(ator.id).subscribe(
+        this.classeService.remove(classe.id).subscribe(
           () => {
             this.refresh();
-            this.snackBar.open('Ator removido com sucesso.', 'X', {
+            this.snackBar.open('Classe removida com sucesso.', 'X', {
               duration: 5000,
               verticalPosition: 'top',
               horizontalPosition: 'center'
             });
           },
-          () => this.onError('Erro ao tentar remover Ator.')
+          () => this.onError('Erro ao tentar remover Classe.')
         )
       }
     })
