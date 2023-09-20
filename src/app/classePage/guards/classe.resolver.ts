@@ -16,6 +16,6 @@ export class ClasseResolver implements Resolve<Classe> {
     if (route.params && route.params['id']) {
       return this.service.loadById(route.params['id']);
     }
-    return of({ id: '', valor: '', dataDevolucao: ''});
+    return of({ id: '', nome: '' ,valor: '', dataDevolucao: ''});
   }
 }

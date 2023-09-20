@@ -16,6 +16,10 @@ export class ClasseFormComponent implements OnInit{
 
   form= this.formBuilder.group({
     id: [''],
+    nome: ['', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(100)]],
     valor: ['', [
       Validators.required,
       Validators.minLength(1),
@@ -38,6 +42,7 @@ export class ClasseFormComponent implements OnInit{
     const classe: Classe = this.route.snapshot.data['classe'];
     this.form.setValue({
       id: classe.id,
+      nome: classe.nome,
       valor: classe.valor,
       dataDevolucao: classe.dataDevolucao
     })

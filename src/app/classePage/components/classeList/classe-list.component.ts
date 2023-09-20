@@ -13,7 +13,7 @@ export class ClasseListComponent implements OnInit{
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
 
-  readonly displayedColumns = ['id', 'valor', 'dataDevolucao', 'acoes']
+  readonly displayedColumns = ['id', 'nome', 'valor', 'dataDevolucao', 'acoes']
 
   constructor() {
   }

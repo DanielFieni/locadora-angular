@@ -6,6 +6,11 @@
     <mat-cell *matCellDef="let classe"> {{classe.id}} </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="nome">
+    <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+    <mat-cell *matCellDef="let classe"> {{classe.nome}} </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="valor">
     <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
     <mat-cell *matCellDef="let classe"> {{classe.valor}} </mat-cell>
