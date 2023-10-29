@@ -1,0 +1,91 @@
+<mat-card>
+
+  <mat-toolbar>Detalhes do Titulo</mat-toolbar>
+
+  <mat-card-content class="card-container">
+
+    <form [formGroup]="form">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Nome" formControlName="nome" #nome>
+        <mat-hint align="end">{{ nome.value.length || 0}} / 100</mat-hint>
+        <mat-error *ngIf="form.get('nome')?.invalid">{{
+          getErrorMessage('nome')
+          }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Ano" formControlName="ano">
+        <mat-error *ngIf="form.get('ano')?.invalid">{{
+          getErrorMessage('ano')
+          }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Sinopse" formControlName="sinopse" #sinopse>
+        <mat-hint align="end">{{ sinopse.value.length || 0}} / 250</mat-hint>
+        <mat-error *ngIf="form.get('sinopse')?.invalid">{{
+          getErrorMessage('sinopse')
+          }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Categoria" formControlName="categoria" #categoria>
+        <mat-hint align="end">{{ categoria.value.length || 0}} / 100</mat-hint>
+        <mat-error *ngIf="form.get('categoria')?.invalid">{{
+          getErrorMessage('sinopse')
+          }}</mat-error>
+      </mat-form-field> 
+
+      <div class="dropdown">
+       
+        <mat-form-field>
+          <mat-label>Ator</mat-label>
+          <mat-select [formControl]="atores" multiple name="ator">
+            <mat-select-trigger>
+              {{atores.value?.[0] || ''}}
+              <span *ngIf="(atores.value?.length || 0) > 1"  class="additional-selection">
+                (+{{(atores.value?.length || 0) - 1}} {{atores.value?.length === 2 ? 'other' : 'others'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let ator of atorData" [value]="ator.nome">{{ator.nome}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Classe</mat-label>
+          <mat-select [formControl]="classes" multiple name="classe">
+            <mat-select-trigger>
+              {{classes.value?.[0] || ''}}
+              <span *ngIf="(classes.value?.length || 0) > 1"  class="additional-selection">
+                (+{{(classes.value?.length || 0) - 1}} {{classes.value?.length === 2 ? 'other' : 'others'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let classe of classeData" [value]="classe.nome">{{classe.nome}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+  
+        <mat-form-field>
+          <mat-label>Diretor</mat-label>
+          <mat-select [formControl]="diretores" multiple name="diretor">
+            <mat-select-trigger>
+              {{diretores.value?.[0] || ''}}
+              <span *ngIf="(diretores.value?.length || 0) > 1"  class="additional-selection">
+                (+{{(diretores.value?.length || 0) - 1}} {{diretores.value?.length === 2 ? 'other' : 'others'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let diretor of diretorData" [value]="diretor.nome">{{diretor.nome}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+    </form>
+
+  </mat-card-content>
+
+  <mat-card-actions class="actions-center">
+    <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+    <button mat-raised-button (click)="onCancel()">Cancelar</button>
+  </mat-card-actions>
+</mat-card>

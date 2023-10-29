@@ -5,6 +5,7 @@ import { AtorService } from "../../services/ator.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute } from "@angular/router";
 import { Ator } from "../../../models/ator";
+import { FormUtilsService } from 'src/app/shared/form/form-utils.service';
 
 @Component({
   selector: 'app-ator-form',
@@ -25,7 +26,8 @@ export class AtorFormComponent implements OnInit{
     private service: AtorService,
     private snackBar: MatSnackBar,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public formUtils: FormUtilsService
   ) {
   }
 
@@ -38,8 +40,12 @@ export class AtorFormComponent implements OnInit{
   }
 
   onSubmit(){
-    this.service.save(this.form.value)
-      .subscribe(result => this.onSuccess(), error =>  this.onError());
+    if (this.form.valid) {
+      this.service.save(this.form.value)
+        .subscribe(result => this.onSuccess(), error => this.onError());
+    } else {
+      this.formUtils.validateAllFormFields(this.form);
+    }
   }
 
   onCancel(){
