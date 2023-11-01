@@ -24,6 +24,15 @@ export class TituloFormComponent implements OnInit{
   diretorData: Diretor[] = [];
   classeData: Classe[] = [];
 
+  diretor: Diretor = {
+    id: '', // Preencha com o valor desejado
+    nome: '', // Preencha com o valor desejado
+  };
+
+  classe: Classe = {
+    id: '', nome: '', dataDevolucao: '', valor: ''
+  };
+
   form = this.formBuilder.group({
     id: [''],
     nome: ['', [
@@ -42,17 +51,14 @@ export class TituloFormComponent implements OnInit{
       Validators.required,
       Validators.minLength(1),
       Validators.maxLength(100)]],
-      
-      ator: this.formBuilder.array(this.atorData, Validators.required),
-      diretor: this.formBuilder.array(this.diretorData, Validators.required),
-      classe: this.formBuilder.array(this.classeData, Validators.required),
+    diretor: this.diretor,
+    classe: this.classe,
+
+    ator: this.formBuilder.array(this.atorData),
+
   });
 
-  
-
   atores = new FormControl('');
-  classes = new FormControl('');
-  diretores = new FormControl('');
 
   constructor(private formBuilder: NonNullableFormBuilder,
     private service: TituloService,
@@ -66,22 +72,23 @@ export class TituloFormComponent implements OnInit{
   ) {
   }
 
+
   ngOnInit() {
     const titulo: Titulo = this.route.snapshot.data['titulo'];
     this.atorService.list()
       .subscribe(data => {
         this.atorData = data;
-    }); 
+    });
 
     this.classeService.list()
       .subscribe(data => {
         this.classeData = data;
-    }); 
+    });
 
     this.diretorService.list()
       .subscribe(data => {
         this.diretorData = data;
-    }); 
+    });
 
     this.form.setValue({
       id: titulo.id,
@@ -92,8 +99,7 @@ export class TituloFormComponent implements OnInit{
       ator: titulo.ator,
       diretor: titulo.diretor,
       classe: titulo.classe
-    }) 
-
+    })
   }
 
   onSubmit(){

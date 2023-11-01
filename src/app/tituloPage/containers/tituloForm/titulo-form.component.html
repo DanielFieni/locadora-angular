@@ -34,47 +34,29 @@
         <mat-error *ngIf="form.get('categoria')?.invalid">{{
           getErrorMessage('sinopse')
           }}</mat-error>
-      </mat-form-field> 
+      </mat-form-field>
 
       <div class="dropdown">
-       
+
         <mat-form-field>
           <mat-label>Ator</mat-label>
-          <mat-select [formControl]="atores" multiple name="ator">
-            <mat-select-trigger>
-              {{atores.value?.[0] || ''}}
-              <span *ngIf="(atores.value?.length || 0) > 1"  class="additional-selection">
-                (+{{(atores.value?.length || 0) - 1}} {{atores.value?.length === 2 ? 'other' : 'others'}})
-              </span>
-            </mat-select-trigger>
-            <mat-option *ngFor="let ator of atorData" [value]="ator.nome">{{ator.nome}}</mat-option>
+          <mat-select [formControl]="atores" multiple required>
+            <mat-option *ngFor="let ator of atorData" [value]="ator">{{ator.nome}}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Classe</mat-label>
-          <mat-select [formControl]="classes" multiple name="classe">
-            <mat-select-trigger>
-              {{classes.value?.[0] || ''}}
-              <span *ngIf="(classes.value?.length || 0) > 1"  class="additional-selection">
-                (+{{(classes.value?.length || 0) - 1}} {{classes.value?.length === 2 ? 'other' : 'others'}})
-              </span>
-            </mat-select-trigger>
-            <mat-option *ngFor="let classe of classeData" [value]="classe.nome">{{classe.nome}}</mat-option>
+          <mat-select required>
+            <mat-option *ngFor="let classe of classeData" [value]="classe">{{classe.nome}}</mat-option>
           </mat-select>
         </mat-form-field>
 
-  
+
         <mat-form-field>
           <mat-label>Diretor</mat-label>
-          <mat-select [formControl]="diretores" multiple name="diretor">
-            <mat-select-trigger>
-              {{diretores.value?.[0] || ''}}
-              <span *ngIf="(diretores.value?.length || 0) > 1"  class="additional-selection">
-                (+{{(diretores.value?.length || 0) - 1}} {{diretores.value?.length === 2 ? 'other' : 'others'}})
-              </span>
-            </mat-select-trigger>
-            <mat-option *ngFor="let diretor of diretorData" [value]="diretor.nome">{{diretor.nome}}</mat-option>
+          <mat-select required>
+            <mat-option *ngFor="let diretor of diretorData" [value]="diretor">{{diretor.nome}}</mat-option>
           </mat-select>
         </mat-form-field>
 

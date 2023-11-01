@@ -6,8 +6,8 @@ import { TituloComponent } from "./containers/tituloComponent/titulo-component.c
 
 const routes: Routes = [
   { path: '', component: TituloComponent },
-  { path: 'novo', component: TituloFormComponent, resolve: { classe: TituloResolver }  },
-  { path: 'editar/:id', component: TituloFormComponent, resolve: { classe: TituloResolver } }
+  { path: 'novo', component: TituloFormComponent, resolve: { titulo: TituloResolver }  },
+  { path: 'editar/:id', component: TituloFormComponent, resolve: { titulo: TituloResolver } }
 ];
 
 @NgModule({
