@@ -8,6 +8,7 @@ import { Titulo } from '../../models/titulo';
 import { TituloService } from '../services/titulo.service';
 import { Diretor } from 'src/app/models/diretor';
 import { Classe } from 'src/app/models/classe';
+import { Ator } from 'src/app/models/ator';
 
 @Injectable({
   providedIn: 'root'
@@ -33,11 +34,15 @@ export class TituloResolver implements Resolve<Titulo> {
       valor: ''
     };
 
+    const atores: Ator[]= [{
+      id: '',
+      nome: '',
+    }];
 
     return of({
       id: '',
       nome: '',
-      ator: [],
+      ator: atores,
       diretor: diretor ,
       ano: '',
       sinopse: '',

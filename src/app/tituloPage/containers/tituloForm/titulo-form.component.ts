@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, NonNullableFormBuilder, Validators } from "@angular/forms";
+import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from "@angular/forms";
 import { Location } from '@angular/common'
 import { TituloService } from "../../services/titulo.service";
 import { AtorService } from 'src/app/atorPage/services/ator.service';
@@ -13,6 +13,7 @@ import { DiretorService } from 'src/app/diretorPage/services/diretor.service';
 import { Diretor } from 'src/app/models/diretor';
 import { Classe } from 'src/app/models/classe';
 import { FormUtilsService } from 'src/app/shared/form/form-utils.service';
+import { error } from '@angular/compiler-cli/src/transformers/util';
 
 @Component({
   selector: 'app-titulo-form',
@@ -24,41 +25,11 @@ export class TituloFormComponent implements OnInit{
   diretorData: Diretor[] = [];
   classeData: Classe[] = [];
 
-  diretor: Diretor = {
-    id: '', // Preencha com o valor desejado
-    nome: '', // Preencha com o valor desejado
-  };
-
-  classe: Classe = {
-    id: '', nome: '', dataDevolucao: '', valor: ''
-  };
-
-  form = this.formBuilder.group({
-    id: [''],
-    nome: ['', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(100)]],
-    ano: ['', [
-      Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(100)]],
-    sinopse: ['', [
-      Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(250)]],
-    categoria: ['', [
-      Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(100)]],
-    diretor: this.diretor,
-    classe: this.classe,
-
-    ator: this.formBuilder.array(this.atorData),
-
-  });
+  form!: FormGroup;
 
   atores = new FormControl('');
+
+  titulo: Titulo = {} as Titulo
 
   constructor(private formBuilder: NonNullableFormBuilder,
     private service: TituloService,
@@ -74,33 +45,83 @@ export class TituloFormComponent implements OnInit{
 
 
   ngOnInit() {
-    const titulo: Titulo = this.route.snapshot.data['titulo'];
-    this.atorService.list()
-      .subscribe(data => {
-        this.atorData = data;
+    this.titulo = this.route.snapshot.data['titulo'];
+
+    this.preencherAtor();
+    this.preencherClasse();
+    this.preencherDiretor();
+
+    this.form = this.formBuilder.group({
+      id: [''],
+      nome: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(100)]],
+      ano: ['', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(100)]],
+      sinopse: ['', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(250)]],
+      categoria: ['', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(100)]],
+      diretor: new FormControl(''),
+      classe: new FormControl(''),
+      atores: new FormControl(''),
+  
     });
 
-    this.classeService.list()
-      .subscribe(data => {
-        this.classeData = data;
-    });
+    if(this.titulo) this.form.patchValue(this.titulo);
 
-    this.diretorService.list()
-      .subscribe(data => {
-        this.diretorData = data;
-    });
+    console.log(this.form.value);
 
-    this.form.setValue({
-      id: titulo.id,
-      nome: titulo.nome,
-      sinopse: titulo.sinopse,
-      ano: titulo.ano,
-      categoria: titulo.categoria,
-      ator: titulo.ator,
-      diretor: titulo.diretor,
-      classe: titulo.classe
+  }
+
+  private preencherClasse() {
+    this.classeService.list().subscribe({
+      next: (classe: Classe[]) => {
+        this.classeData.push(...classe)
+        let value: Classe = {} as Classe
+        this.classeData.forEach(classe => {
+          const add = this.titulo.classe = classe;
+          if (add) value = add;
+        })
+        this.form.controls['classe'].setValue(value)
+      },
     })
   }
+
+  private preencherDiretor() {
+    this.diretorService.list().subscribe({
+      next: (diretor: Diretor[]) => {
+        this.diretorData.push(...diretor)
+        let value: Diretor = {} as Diretor
+        this.diretorData.forEach(diretor => {
+          const add = this.titulo.diretor = diretor;
+          if (add) value = add;
+        })
+        this.form.controls['diretor'].setValue(value)
+      },
+    })
+  }
+
+  private preencherAtor(){
+    this.atorService.list().subscribe({
+      next: (atores: Ator[]) => {
+        const values: Ator[] = [];
+        this.atorData.push(...atores);
+        this.titulo.ator.forEach(ator => {
+          const add = this.atorData.find(a2 => a2.id === ator.id);
+          if (add) values.push(add);
+        })
+        this.form.controls['atores'].setValue(values);
+      }
+    })
+  } 
 
   onSubmit(){
       if (this.form.valid) {

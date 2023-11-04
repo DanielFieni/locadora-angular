@@ -39,23 +39,22 @@
       <div class="dropdown">
 
         <mat-form-field>
-          <mat-label>Ator</mat-label>
-          <mat-select [formControl]="atores" multiple required>
+          <mat-label>Ator(es)</mat-label>
+          <mat-select formControlName="atores" multiple required>
             <mat-option *ngFor="let ator of atorData" [value]="ator">{{ator.nome}}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Classe</mat-label>
-          <mat-select required>
+          <mat-select required formControlName="classe">
             <mat-option *ngFor="let classe of classeData" [value]="classe">{{classe.nome}}</mat-option>
           </mat-select>
         </mat-form-field>
 
-
         <mat-form-field>
           <mat-label>Diretor</mat-label>
-          <mat-select required>
+          <mat-select required formControlName="diretor">
             <mat-option *ngFor="let diretor of diretorData" [value]="diretor">{{diretor.nome}}</mat-option>
           </mat-select>
         </mat-form-field>

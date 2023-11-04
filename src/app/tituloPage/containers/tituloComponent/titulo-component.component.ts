@@ -70,7 +70,7 @@ export class TituloComponent implements OnInit {
         this.tituloService.remove(titulo.id).subscribe(
           () => {
             this.refresh();
-            this.snackBar.open('Titulo removida com sucesso.', 'X', {
+            this.snackBar.open('Titulo removido com sucesso.', 'X', {
               duration: 5000,
               verticalPosition: 'top',
               horizontalPosition: 'center'

@@ -13,7 +13,7 @@ export class TituloListComponent implements OnInit{
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
 
-  readonly displayedColumns = ['id', 'nome', 'ano', 'sinopse', 'categoria', 'acoes']
+  readonly displayedColumns = ['id', 'nome', 'ano', 'sinopse', 'categoria', 'atores', 'diretor', 'classe', 'acoes']
 
   constructor() {
   }
