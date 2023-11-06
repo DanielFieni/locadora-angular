@@ -1,0 +1,45 @@
+<mat-card>
+
+  <mat-toolbar>Detalhes do Item</mat-toolbar>
+
+  <mat-card-content class="card-container">
+
+    <form [formGroup]="form">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Numero de Serie" formControlName="numSerie" #numSerie>
+        <mat-error *ngIf="form.get('numSerie')?.invalid">{{
+          getErrorMessage('numSerie')
+          }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Data de Aquisicao" formControlName="dtAquisicao" type="date">
+        <mat-error *ngIf="form.get('dtAquisicao')?.invalid">{{
+          getErrorMessage('dtAquisicao')
+          }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Tipo" formControlName="tipoItem" #tipoItem>
+        <mat-hint align="end">{{ tipoItem.value.length || 0}} / 100</mat-hint>
+        <mat-error *ngIf="form.get('tipoItem')?.invalid">{{
+          getErrorMessage('tipoItem')
+          }}</mat-error>
+      </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Titulo</mat-label>
+          <mat-select formControlName="titulo" required>
+            <mat-option *ngFor="let titulo of tituloData" [value]="titulo">{{titulo.nome}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+    </form>
+
+  </mat-card-content>
+
+  <mat-card-actions class="actions-center">
+    <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+    <button mat-raised-button (click)="onCancel()">Cancelar</button>
+  </mat-card-actions>
+</mat-card>

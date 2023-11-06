@@ -13,7 +13,6 @@ import { DiretorService } from 'src/app/diretorPage/services/diretor.service';
 import { Diretor } from 'src/app/models/diretor';
 import { Classe } from 'src/app/models/classe';
 import { FormUtilsService } from 'src/app/shared/form/form-utils.service';
-import { error } from '@angular/compiler-cli/src/transformers/util';
 
 @Component({
   selector: 'app-titulo-form',
